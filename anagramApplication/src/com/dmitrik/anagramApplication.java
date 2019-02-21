@@ -12,9 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static java.util.Map.Entry.comparingByValue;
-
-public class Main {
+public class anagramApplication {
 
 
     /// <summary>Max string length to be checked using <see cref="ModPrimes"/></summary>
@@ -39,14 +37,14 @@ public class Main {
         List<String> anagrams = new ArrayList<>();
         for (String word : dictionary) {
             if (
-                //IsAnagram(input, word) // First, 91
-                // inputLength == word.length() && HasEnoughChars(word, inputChars) // First, but "inline" check and compute input once, 92
-                //IsAnagramPrimes(input, word) // Second, 70
-                // inputPrimes == ComputePrimes(word)    //  Second, 68.
-                //inputLength == word.length() && inputPrimes == ComputePrimes(word)    // Second, 64, process input once, inline length check.
-                    inputLength == word.length() && (inputLength < MaxLengthForModPrimes
-                            ? ModPrimes(inputPrimes, word)
-                            : inputPrimes == ComputePrimes(word)) // Third, 62,use ModCheck
+//                IsAnagram(input, word) // First, 91
+//                inputLength == word.length() && HasEnoughChars(word, inputChars) // First, but "inline" check and compute input once, 92
+//                IsAnagramPrimes(input, word) // Second, 70
+//                inputPrimes == ComputePrimes(word)    //  Second, 68.
+                inputLength == word.length() && inputPrimes == ComputePrimes(word)    // Second, 64, process input once, inline length check.
+//                inputLength == word.length() && (inputLength < MaxLengthForModPrimes
+//                       ? ModPrimes(inputPrimes, word)
+//                       : inputPrimes == ComputePrimes(word)) // Third, 62,use ModCheck
             ) {
                 result.append(",").append(word);
                 anagrams.add(word);
@@ -166,28 +164,28 @@ public class Main {
         ArrayList<Pair<String, String>> anagrams = new ArrayList<>();
         for (String w1 : listA) {
             int w1Len = w1.length();
-            Map<Character, Integer> w1Chars = CountChars(w1);
+            HashMap<Character, Integer> w1Chars = CountChars(w1);
             long w1Primes = ComputePrimes(w1);
             for (String w2 : listB) {
                 if (w1.equalsIgnoreCase(w2)) {
                     continue; // Too simple, do not anagram yourself
                 }
                 if (
-                    //IsAnagram(w1, w2)
-                    //w1Len == w2.length() && HasEnoughChars(w2, w1Chars)
-                    //IsAnagramPrimes(w1, w2)
-                    //w1Primes == ComputePrimes(w2)
-                    //w1Len == w2.length()&& w1Primes == ComputePrimes(w2)
-                        w1Len == w2.length() && (w1Len < MaxLengthForModPrimes
-                                ? ModPrimes(w1Primes, w2)
-                                : w1Primes == ComputePrimes(w2))
+//                    IsAnagram(w1, w2)                                         // []
+//                    w1Len == w2.length() && HasEnoughChars(w2, w1Chars)       // [452.920, 9806]
+//                    IsAnagramPrimes(w1, w2)                                   // []
+//                    w1Primes == ComputePrimes(w2)                             // [575.666, 9806]
+                    w1Len == w2.length()&& w1Primes == ComputePrimes(w2)      // [166.747, 9806]
+//                    w1Len == w2.length() && (w1Len < MaxLengthForModPrimes
+//                            ? ModPrimes(w1Primes, w2)
+//                            : w1Primes == ComputePrimes(w2))            // [249.184, 9806]
                 ) {
                     anagrams.add(new Pair<>(w1, w2));
                 }
             }
         }
         long stop = System.currentTimeMillis() - startTime;
-        System.out.print(stop);
+        System.out.println(stop);
         System.out.println(anagrams.size());
         Map<String, List<String>> result =
                 anagrams.stream().collect(Collectors.groupingBy(
@@ -197,6 +195,8 @@ public class Main {
         for (Map.Entry<String, List<String>> e : result.entrySet()) {
             System.out.println(e.getKey() + ": " + String.join(",", e.getValue()));
         }
+        System.out.println(stop);
+        System.out.println(anagrams.size());
         return result;
     }
 }
