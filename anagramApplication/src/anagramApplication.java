@@ -1,5 +1,3 @@
-package com.dmitrik;
-
 import javafx.util.Pair;
 
 import java.io.IOException;
@@ -53,7 +51,6 @@ public class anagramApplication {
         long stop = System.currentTimeMillis() - startTime;
         System.out.print(String.valueOf(stop) + result);
     }
-
 
     /// <summary>First simple implementation</summary>
     /// <param name="strA">String A</param>
@@ -175,7 +172,7 @@ public class anagramApplication {
 //                    w1Len == w2.length() && HasEnoughChars(w2, w1Chars)       // [452.920, 9806]
 //                    IsAnagramPrimes(w1, w2)                                   // []
 //                    w1Primes == ComputePrimes(w2)                             // [575.666, 9806]
-                    w1Len == w2.length()&& w1Primes == ComputePrimes(w2)      // [166.747, 9806]
+                        w1Len == w2.length() && w1Primes == ComputePrimes(w2)      // [166.747, 9806]
 //                    w1Len == w2.length() && (w1Len < MaxLengthForModPrimes
 //                            ? ModPrimes(w1Primes, w2)
 //                            : w1Primes == ComputePrimes(w2))            // [249.184, 9806]
