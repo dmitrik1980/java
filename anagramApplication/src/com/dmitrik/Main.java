@@ -23,7 +23,7 @@ public class Main {
     /// As highest prime used is 157 and ulong64.MaxValue is 18446744073709551615, this makes 8 chars length.
     /// Use https://www.rapidtables.com/calc/math/Log_Calculator.html
     /// </remarks>
-    final static int MaxLengthForModPrimes = 8;
+    private final static int MaxLengthForModPrimes = 8;
 
     public static void main(String[] args) throws IOException {
 
@@ -36,7 +36,7 @@ public class Main {
         int inputLength = input.length();
         Map<Character, Integer> inputChars = CountChars(input);
         long inputPrimes = ComputePrimes(input);
-        List<String> anagrams = new ArrayList();
+        List<String> anagrams = new ArrayList<>();
         for (String word : dictionary) {
             if (
                 //IsAnagram(input, word) // First, 91
@@ -44,9 +44,9 @@ public class Main {
                 //IsAnagramPrimes(input, word) // Second, 70
                 // inputPrimes == ComputePrimes(word)    //  Second, 68.
                 //inputLength == word.length() && inputPrimes == ComputePrimes(word)    // Second, 64, process input once, inline length check.
-                inputLength == word.length() && (inputLength < MaxLengthForModPrimes
-                        ? ModPrimes(inputPrimes, word)
-                        : inputPrimes == ComputePrimes(word)) // Third, 62,use ModCheck
+                    inputLength == word.length() && (inputLength < MaxLengthForModPrimes
+                            ? ModPrimes(inputPrimes, word)
+                            : inputPrimes == ComputePrimes(word)) // Third, 62,use ModCheck
             ) {
                 result.append(",").append(word);
                 anagrams.add(word);
@@ -70,8 +70,8 @@ public class Main {
     /// <summary>This is first primitive implementation - just count symbols in word.</summary>
     /// <param name="word">Word to split to chars.</param>
     /// <returns>Number of occurence in word by char (all to lower).</returns>
-    static HashMap<Character, Integer> CountChars(String word) {
-        HashMap<Character, Integer> result = new HashMap<Character, Integer>();
+    private static HashMap<Character, Integer> CountChars(String word) {
+        HashMap<Character, Integer> result = new HashMap<>();
         for (char ch : word.toLowerCase().toCharArray()) {
             int count = result.getOrDefault(ch, 0) + 1;
             result.put(ch, count);
@@ -85,7 +85,7 @@ public class Main {
     /// <param name="symbolCount">Symbol count, occurence by char (to lower)</param>
     /// <see cref="CountChars"/>
     /// <returns>True, if is anagram, but note, length equality is not checked!</returns>
-    public static Boolean HasEnoughChars(String word, HashMap<Character, Integer> symbolCount) {
+    private static Boolean HasEnoughChars(String word, HashMap<Character, Integer> symbolCount) {
         // As this count shall be modified, I need to "clone" it (shallow-copy enough)
         Map<Character, Integer> decounted = (HashMap<Character, Integer>) symbolCount.clone();
         for (char ch : word.toLowerCase().toCharArray()) {
@@ -131,7 +131,7 @@ public class Main {
         return s1L <= MaxLengthForModPrimes ? ModPrimes(s1, strB) : s1 == ComputePrimes(strB);
     }
 
-    static long ComputePrimes(String word) {
+    private static long ComputePrimes(String word) {
         long result = 1;
         for (char l : word.toCharArray()) {
             result *= Multipliers[l];
@@ -143,7 +143,7 @@ public class Main {
     /// <param name="cmp">ComputePrimes result for</param>
     /// <param name="word"></param>
     /// <returns></returns>
-    static Boolean ModPrimes(long cmp, String word) {
+    private static Boolean ModPrimes(long cmp, String word) {
         for (char l : word.toCharArray()) {
             long mul = Multipliers[l];
             if (cmp % mul == 0) {
@@ -163,7 +163,7 @@ public class Main {
     static Map<String, List<String>> FindAll(List<String> listA, List<String> listB) {
         long startTime = System.currentTimeMillis();
 
-        ArrayList<Pair<String, String>> anagrams = new ArrayList<Pair<String, String>>();
+        ArrayList<Pair<String, String>> anagrams = new ArrayList<>();
         for (String w1 : listA) {
             int w1Len = w1.length();
             Map<Character, Integer> w1Chars = CountChars(w1);
@@ -182,7 +182,7 @@ public class Main {
                                 ? ModPrimes(w1Primes, w2)
                                 : w1Primes == ComputePrimes(w2))
                 ) {
-                    anagrams.add(new Pair(w1, w2));
+                    anagrams.add(new Pair<>(w1, w2));
                 }
             }
         }
@@ -194,8 +194,8 @@ public class Main {
                         Pair::getKey,
                         Collectors.mapping(Pair::getValue, Collectors.toList())
                 ));
-        for(Map.Entry<String, List<String>> e : result.entrySet()){
-            System.out.print(e.getKey() + ": " + String.join(",", e.getValue()));
+        for (Map.Entry<String, List<String>> e : result.entrySet()) {
+            System.out.println(e.getKey() + ": " + String.join(",", e.getValue()));
         }
         return result;
     }
